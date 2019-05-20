@@ -206,9 +206,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/fbascheper/kafka-connect-telegram.git</connection>
-        <url>https://github.com/fbascheper/kafka-connect-telegram</url>
-        <developerConnection>scm:git:https://github.com/fbascheper/kafka-connect-telegram.git
+        <connection>scm:git:https://github.com/fbascheper/oracle-aq-connector.git</connection>
+        <url>https://github.com/fbascheper/oracle-aq-connector</url>
+        <developerConnection>scm:git:https://github.com/fbascheper/oracle-aq-connector.git
         </developerConnection>
         <tag>HEAD</tag>
     </scm>
