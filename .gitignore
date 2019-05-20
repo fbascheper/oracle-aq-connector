@@ -1,0 +1,14 @@
+# IDE ignore files
+
+.DS_Store
+*.iml
+/.idea
+/.settings
+/.project
+/.classpath
+/.cache-main
+/.cache-tests
+
+# build targets
+target
+
