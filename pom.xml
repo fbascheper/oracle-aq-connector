@@ -4,7 +4,7 @@
 
     <groupId>com.github.fbascheper</groupId>
     <artifactId>oracle-aq-connector</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>oracle-aq-connector</name>
 
@@ -208,7 +208,7 @@
         <url>https://github.com/fbascheper/oracle-aq-connector</url>
         <developerConnection>scm:git:https://github.com/fbascheper/oracle-aq-connector.git
         </developerConnection>
-        <tag>oracle-aq-connector-0.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <developers>
