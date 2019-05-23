@@ -9,14 +9,20 @@
 
 ## Tomcat configuration
 
-Update your Tomcat configuration files in order to use the following JNDI references:
+You will need to update your Tomcat configuration files in order to use the following JNDI references:
 
 * ``java:/comp/env/jdbc/myDS`` 
-* ``java:/comp/env/jms/aqQueueConnectionFactory`` 
+* ``java:/comp/env/jms/aqQueueConnectionFactory``
  
 
-### Global resources in ``server.xml``
+### Notes 
+1. Tomcat does not ship with A JTA implementation and/or XA transaction manager, but you will need one to use an ``XADataSource`` or ``XAQueueConnectionFactory``. 
+2. If you are looking for an open source JTA-implementation, check out [Atomikos Essentials](https://www.atomikos.com).
 
+
+### Add global resources in ``server.xml``
+
+````xml
   <GlobalNamingResources>
     <Resource name="java:/comp/env/jdbc/myDS" auth="Container"
                   type="oracle.jdbc.xa.client.OracleXADataSource"
@@ -38,11 +44,14 @@ Update your Tomcat configuration files in order to use the following JNDI refere
                   password="aqpasswd"
     />
   </GlobalNamingResources>
-
-
-### Resource links in ``config.xml``
-
 ````
+
+
+
+### Add resource links in ``config.xml``
+
+````xml
+<Context>
     <ResourceLink name="jdbc/myDS"
                   global="java:/comp/env/jdbc/myDS"
                   type="javax.sql.XADataSource" />
@@ -50,5 +59,27 @@ Update your Tomcat configuration files in order to use the following JNDI refere
     <ResourceLink name="jms/aqQueueConnectionFactory"
 	              global="java:/comp/env/jms/aqQueueConnectionFactory"
 				  type="javax.jms.XAQueueConnectionFactory" />
+</Context>
 
+````
+
+
+### Spring sample code to retrieve the ``XAQueueConnectionFactory`` from JNDI  
+
+````java
+public class ConnectionFactories {
+    
+    @Bean(name = "aqQueueConnectionFactory")
+    public XAQueueConnectionFactory aqQueueConnectionFactory() {
+        XAQueueConnectionFactory qcf;
+
+        try {
+            qcf = (XAQueueConnectionFactory) new JndiTemplate().lookup("java:/comp/env/jms/aqQueueConnectionFactory");
+        } catch (NamingException e) {
+            throw new IllegalStateException("Failed to lookup QCF", e);
+        }
+
+        return qcf;
+    }
+}
 ````
